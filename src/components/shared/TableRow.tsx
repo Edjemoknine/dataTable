@@ -2,7 +2,7 @@ export type TabaleItemProps = {
   id: number;
   song: string;
   artist: string;
-  year: string;
+  year: number;
 };
 const TableRow = ({ item }: { item: TabaleItemProps }) => {
   return (

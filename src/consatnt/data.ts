@@ -1,4 +1,4 @@
-export const data = [
+export const fakedata = [
   {
     id: 1,
     song: "The Sliding Mr. Bones (Next Stop, Pottersville)",

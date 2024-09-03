@@ -1,28 +1,30 @@
-import { data } from "@/consatnt/data";
-import TableRow from "./TableRow";
+import { fakedata } from "@/consatnt/data";
+import TableRow, { TabaleItemProps } from "./TableRow";
 import { useCallback, useEffect, useState } from "react";
 import TableHeader from "./TableHeader";
 import useDebounce from "@/utils/useDebounce";
 import { PaginationComp } from "./Pagination";
+import { useSongs } from "@/context/SongContext";
 
-const haeders = Object.keys(data[0]);
-console.log(data);
+console.log(fakedata);
 
 const Table2 = () => {
+  const { data, term } = useSongs();
+  const haeders = Object.keys(data[0]);
   //
-  const [term, setTerm] = useState("");
+
   const [filtredData, setfiltredData] = useState(data);
   const debterm = useDebounce(term, 500);
 
   const filtredSearch = useCallback(() => {
     setfiltredData(
       data.filter(
-        (item) =>
+        (item: TabaleItemProps) =>
           item.song.toLowerCase().includes(debterm.toLowerCase()) ||
           item.artist.toLowerCase().includes(debterm.toLowerCase())
       )
     );
-  }, [debterm]);
+  }, [debterm, data]);
 
   useEffect(() => {
     filtredSearch();
@@ -37,7 +39,7 @@ const Table2 = () => {
 
   return (
     <>
-      <TableHeader setTerm={setTerm} term={term} />
+      <TableHeader />
       <div className="table w-full rounded-xl overflow-hidden shadow  border table-auto  border-collapse  border-spacing-2">
         <div className="table-header-group p-4">
           <div className="table-row border-b bg-gray-100">
@@ -52,7 +54,7 @@ const Table2 = () => {
           </div>
         </div>
         <div className="table-row-group p-4">
-          {currentItems.map((item) => (
+          {currentItems.map((item: TabaleItemProps) => (
             <TableRow item={item} />
           ))}
         </div>

@@ -18,10 +18,6 @@ export function AlerSongtDialog({ open, setOpen }: Props) {
           <AlertDialogTitle>Add new song to your data</AlertDialogTitle>
           <SongForm setOpen={setOpen} />
         </AlertDialogHeader>
-        {/* <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
-        </AlertDialogFooter> */}
       </AlertDialogContent>
     </AlertDialog>
   );

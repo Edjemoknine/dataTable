@@ -1,7 +1,8 @@
+import { useSongs } from "@/context/SongContext";
 import { Input } from "../ui/input";
-import { HeaderProps } from "./TableHeader";
 
-const SongSearch = ({ setTerm, term }: HeaderProps) => {
+const SongSearch = () => {
+  const { setTerm, term } = useSongs();
   return (
     <div className="w-1/3">
       <Input
