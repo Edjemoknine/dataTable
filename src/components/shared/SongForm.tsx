@@ -33,7 +33,11 @@ export function SongForm({ setOpen }: Props) {
   function onSubmit(newSong: z.infer<typeof FormSchema>) {
     setData([
       ...data,
-      { ...newSong, id: Math.ceil(Math.random() * 100).toString() },
+      {
+        ...newSong,
+        year: Number(newSong.year),
+        id: Number(Math.ceil(Math.random() * 100)),
+      },
     ]);
     setOpen(false);
     toast({
