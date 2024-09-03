@@ -33,7 +33,7 @@ export function SongForm({ setOpen }: Props) {
   function onSubmit(newSong: z.infer<typeof FormSchema>) {
     setData([
       ...data,
-      { ...newSong, id: Number(Math.ceil(Math.random() * 100)) },
+      { ...newSong, id: Math.ceil(Math.random() * 100).toString() },
     ]);
     setOpen(false);
     toast({
@@ -77,9 +77,8 @@ export function SongForm({ setOpen }: Props) {
           name="year"
           render={({ field }) => (
             <FormItem>
-              {/* <FormLabel>Username</FormLabel> */}
               <FormControl>
-                <Input placeholder="1999" {...field} />
+                <Input placeholder="1999" type="number" {...field} />
               </FormControl>
 
               <FormMessage />
