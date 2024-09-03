@@ -1,5 +1,5 @@
-import { TabaleItemProps } from "@/components/shared/TableRow";
 import { fakedata } from "@/consatnt/data";
+import { TabaleItemProps } from "@/types/Song";
 import { createContext, ReactNode, useContext, useState } from "react";
 type Initail = {
   data: TabaleItemProps[];

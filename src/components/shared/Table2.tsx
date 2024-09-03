@@ -1,10 +1,11 @@
 import { fakedata } from "@/consatnt/data";
-import TableRow, { TabaleItemProps } from "./TableRow";
+import TableRow from "./TableRow";
 import { useCallback, useEffect, useState } from "react";
 import TableHeader from "./TableHeader";
 import useDebounce from "@/utils/useDebounce";
 import { PaginationComp } from "./Pagination";
 import { useSongs } from "@/context/SongContext";
+import { TabaleItemProps } from "@/types/Song";
 
 console.log(fakedata);
 

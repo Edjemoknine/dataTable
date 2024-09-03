@@ -1,9 +1,5 @@
-export type TabaleItemProps = {
-  id: number;
-  song: string;
-  artist: string;
-  year: number;
-};
+import { TabaleItemProps } from "@/types/Song";
+
 const TableRow = ({ item }: { item: TabaleItemProps }) => {
   return (
     <div

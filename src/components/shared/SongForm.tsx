@@ -12,31 +12,29 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { FormSchema } from "@/validation/zodV";
+import { useSongs } from "@/context/SongContext";
 
-const FormSchema = z.object({
-  song: z.string().min(2, {
-    message: "Song name must be at least 2 characters.",
-  }),
-  artist: z.string().min(2, {
-    message: "Artist name must be at least 2 characters.",
-  }),
-  date: z.string(),
-});
 type Props = {
   setOpen: (isOpen: boolean) => void;
 };
 export function SongForm({ setOpen }: Props) {
+  const { setData, data } = useSongs();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       song: "",
       artist: "",
-      date: "",
+      year: "",
     },
   });
   const { toast } = useToast();
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+  function onSubmit(newSong: z.infer<typeof FormSchema>) {
+    setData([
+      ...data,
+      { ...newSong, id: Number(Math.ceil(Math.random() * 100)) },
+    ]);
     setOpen(false);
     toast({
       title: "Song has been added",
@@ -76,7 +74,7 @@ export function SongForm({ setOpen }: Props) {
         />
         <FormField
           control={form.control}
-          name="date"
+          name="year"
           render={({ field }) => (
             <FormItem>
               {/* <FormLabel>Username</FormLabel> */}
@@ -89,6 +87,14 @@ export function SongForm({ setOpen }: Props) {
           )}
         />
         <Button type="submit">Submit</Button>
+        <Button
+          className="ml-3"
+          variant={"outline"}
+          onClick={() => setOpen(false)}
+          type="button"
+        >
+          Cancel
+        </Button>
       </form>
     </Form>
   );
