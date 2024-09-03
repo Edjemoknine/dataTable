@@ -1,5 +1,5 @@
 import "./App.css";
-// import Table from "./components/shared/Table";
+import { Toaster } from "@/components/ui/toaster";
 import Table2 from "./components/shared/Table2";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
       <div className="my-16" />
 
       <Table2 />
+      <Toaster />
     </main>
   );
 }
