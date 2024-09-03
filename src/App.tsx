@@ -6,7 +6,6 @@ function App() {
   return (
     <main className="">
       <div className="my-16" />
-      {/* <Table /> */}
       <div className="my-16" />
 
       <Table2 />
