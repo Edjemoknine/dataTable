@@ -14,31 +14,43 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { FormSchema } from "@/validation/zodV";
 import { useSongs } from "@/context/SongContext";
+// import { TabaleItemProps } from "@/types/Song";
 
 type Props = {
   setOpen: (isOpen: boolean) => void;
+  //   item?: TabaleItemProps | undefined;
 };
 export function SongForm({ setOpen }: Props) {
-  const { setData, data } = useSongs();
+  const { setData, data, selected, setSelected } = useSongs();
+  console.log({ selected });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      song: "",
-      artist: "",
-      year: "",
+      song: selected?.song ?? "",
+      artist: selected?.artist ?? "",
+      year: selected?.year ?? "",
     },
   });
   const { toast } = useToast();
   function onSubmit(newSong: z.infer<typeof FormSchema>) {
-    setData([
-      ...data,
-      {
-        ...newSong,
-        year: Number(newSong.year),
-        id: Number(Math.ceil(Math.random() * 100)),
-      },
-    ]);
+    if (selected) {
+      setData((prev) => [
+        ...prev.filter((song) => song.id !== selected?.id),
+        { id: selected.id, ...newSong },
+      ]);
+    } else {
+      setData([
+        ...data,
+        {
+          ...newSong,
+          year: Number(newSong.year),
+          id: data.length + 1,
+        },
+      ]);
+    }
+    form.reset();
+    setSelected(null);
     setOpen(false);
     toast({
       title: "Song has been added",
@@ -93,7 +105,11 @@ export function SongForm({ setOpen }: Props) {
         <Button
           className="ml-3"
           variant={"outline"}
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setOpen(false);
+            form.reset();
+            setSelected(null);
+          }}
           type="button"
         >
           Cancel

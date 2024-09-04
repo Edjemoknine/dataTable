@@ -1,13 +1,16 @@
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { AlerSongtDialog } from "./AddSongDialog";
+import { useSongs } from "@/context/SongContext";
+import { SongForm } from "./SongForm";
 
 const AddSong = () => {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useSongs();
   return (
     <div>
       <Button onClick={() => setOpen((prev) => !prev)}>Add New Song</Button>
-      <AlerSongtDialog setOpen={setOpen} open={open} />
+      <AlerSongtDialog setOpen={setOpen} open={open}>
+        <SongForm setOpen={setOpen} />
+      </AlerSongtDialog>
     </div>
   );
 };

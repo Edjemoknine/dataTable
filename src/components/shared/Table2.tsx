@@ -8,14 +8,21 @@ import { useSongs } from "@/context/SongContext";
 import { TabaleItemProps } from "@/types/Song";
 
 console.log(fakedata);
-
 const Table2 = () => {
   const { data, term } = useSongs();
   const haeders = Object.keys(data[0]);
-  //
 
   const [filtredData, setfiltredData] = useState(data);
   const debterm = useDebounce(term, 500);
+
+  // Pagination
+  const ItemPerpage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastItem = currentPage * ItemPerpage;
+  const indexOfFirstItem = indexOfLastItem - ItemPerpage;
+  const currentItems = filtredData.slice(indexOfFirstItem, indexOfLastItem);
+  const pageCount = Math.ceil(filtredData.length / ItemPerpage);
+  //
 
   const filtredSearch = useCallback(() => {
     setfiltredData(
@@ -29,14 +36,8 @@ const Table2 = () => {
 
   useEffect(() => {
     filtredSearch();
+    setCurrentPage(1);
   }, [term, filtredSearch]);
-  // Pagination
-  const ItemPerpage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
-  const indexOfLastItem = currentPage * ItemPerpage;
-  const indexOfFirstItem = indexOfLastItem - ItemPerpage;
-  const currentItems = filtredData.slice(indexOfFirstItem, indexOfLastItem);
-  const pageCount = Math.ceil(filtredData.length / ItemPerpage);
 
   return (
     <>
@@ -52,11 +53,14 @@ const Table2 = () => {
                 {item}
               </div>
             ))}
+            <div className="table-cell text-left p-3 font-medium capitalize">
+              Actions
+            </div>
           </div>
         </div>
         <div className="table-row-group p-4">
           {currentItems.map((item: TabaleItemProps) => (
-            <TableRow item={item} />
+            <TableRow item={item} key={item.song} />
           ))}
         </div>
       </div>
