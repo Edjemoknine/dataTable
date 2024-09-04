@@ -15,22 +15,19 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { FormSchema } from "@/validation/zodV";
 import { useSongs } from "@/context/SongContext";
-// import { TabaleItemProps } from "@/types/Song";
 
 type Props = {
   setOpen: (isOpen: boolean) => void;
-  //   item?: TabaleItemProps | undefined;
 };
 export function SongForm({ setOpen }: Props) {
   const { setData, data, selected, setSelected } = useSongs();
-  console.log({ selected });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       song: selected?.song ?? "",
       artist: selected?.artist ?? "",
-      year: selected?.year ?? 1990,
+      year: selected?.year?.toString() ?? "1990",
     },
   });
   const { toast } = useToast();
