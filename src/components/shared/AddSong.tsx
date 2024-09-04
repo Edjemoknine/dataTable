@@ -7,7 +7,9 @@ const AddSong = () => {
   const { open, setOpen } = useSongs();
   return (
     <div>
-      <Button onClick={() => setOpen((prev) => !prev)}>Add New Song</Button>
+      <Button onClick={() => setOpen(open === true ? false : true)}>
+        Add New Song
+      </Button>
       <AlerSongtDialog setOpen={setOpen} open={open}>
         <SongForm setOpen={setOpen} />
       </AlerSongtDialog>

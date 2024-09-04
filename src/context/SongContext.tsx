@@ -7,19 +7,19 @@ import {
   useEffect,
   useState,
 } from "react";
-type Initail = {
+// Define the initial type
+type InitialState = {
   data: TabaleItemProps[];
   term: string;
   setData: (data: TabaleItemProps[]) => void;
-
   setTerm: (term: string) => void;
   open: boolean;
-  setOpen: (term: boolean) => void;
+  setOpen: (open: boolean) => void;
   deleteSong: (id: number) => void;
   setSelected: (item: TabaleItemProps | null) => void;
-  selected: TabaleItemProps | null;
+  selected?: TabaleItemProps | null;
 };
-const SongContext = createContext<Initail>({
+const SongContext = createContext<InitialState>({
   data: fakedata,
   term: "",
   open: false,
@@ -30,19 +30,19 @@ const SongContext = createContext<Initail>({
   setSelected: () => {},
   selected: null,
 });
-const fetchData = () => {
-  let fetchedData;
-  if (localStorage.getItem("data")) {
-    fetchedData = JSON.parse(localStorage.getItem("data")!);
-    return fetchedData;
+// Function to fetch data from localStorage
+const fetchData = (): TabaleItemProps[] => {
+  const storedData = localStorage.getItem("data");
+  if (storedData) {
+    return JSON.parse(storedData) as TabaleItemProps[];
   }
+  return fakedata; // Fallback to fakedata if no data in localStorage
 };
 const SongProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<TabaleItemProps[]>(() => fetchData());
   const [term, setTerm] = useState("");
-  const [selected, setSelected] = useState(null);
-  console.log(selected);
+  const [selected, setSelected] = useState<TabaleItemProps | null>(null);
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(fakedata));

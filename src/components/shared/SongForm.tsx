@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,15 +30,15 @@ export function SongForm({ setOpen }: Props) {
     defaultValues: {
       song: selected?.song ?? "",
       artist: selected?.artist ?? "",
-      year: selected?.year ?? "",
+      year: selected?.year ?? 1990,
     },
   });
   const { toast } = useToast();
   function onSubmit(newSong: z.infer<typeof FormSchema>) {
     if (selected) {
-      setData((prev) => [
-        ...prev.filter((song) => song.id !== selected?.id),
-        { id: selected.id, ...newSong },
+      setData([
+        ...data.filter((song) => song.id !== selected?.id),
+        { id: selected.id, ...newSong, year: Number(newSong.year) },
       ]);
     } else {
       setData([
